@@ -1,6 +1,15 @@
 import express from "express";
+import dotenv from "dotenv";
+import mongoose from "mongoose";
 
 import authRoutes from "./routes/auth.route.js";
+
+dotenv.config({ path: ".env.local" });
+
+mongoose
+    .connect(process.env.MONGO_URI)
+    .then(() => console.log("DB OK"))
+    .catch((err) => console.log(err));
 
 const app = express();
 
