@@ -1,0 +1,36 @@
+@mixin button {
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: $redColor;
+    transition: 0.1s ease-in;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 18px;
+
+    //if button will be used with link
+    a {
+        color: #fff;
+        text-decoration: none;
+    }
+
+    &:hover {
+        background-color: darken($redColor, 10%);
+    }
+}
+
+@mixin container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+@mixin input {
+    color: #fff;
+    outline: none;
+    padding: 18px 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: transparent;
+    border: 1px solid rgba($color: #fff, $alpha: 0.7);
+}

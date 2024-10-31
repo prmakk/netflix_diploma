@@ -1,9 +1,11 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 
-import styles from "./HomePage.module.scss";
+import HomeScreen from "./HomeScreen";
+import AuthScreen from "./AuthScreen";
 
 const HomePage: FC = () => {
-    return <div className={styles.home}>HomePage</div>;
+    const [isAuth, setIsAuth] = useState<boolean>(false);
+    return isAuth ? <HomeScreen /> : <AuthScreen />;
 };
 
 export default HomePage;

@@ -2,15 +2,20 @@ import { FC, useState } from "react";
 import { Link } from "react-router-dom";
 
 import styles from "./SignUpPage.module.scss";
+import { useAuthStore } from "../../store/authUser";
 
 const SignUpPage: FC = () => {
-    const [email, setEmail] = useState<string>("");
+    const { searchParams } = new URL(window.location.href);
+    const emailValue = searchParams.get("email");
+    const [email, setEmail] = useState<string>(emailValue || "");
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
 
+    const { signup } = useAuthStore();
+
     const handleSignUp = (e: React.FormEvent) => {
         e.preventDefault();
-        console.log(email, username, password);
+        signup({ email, username, password });
     };
 
     return (
