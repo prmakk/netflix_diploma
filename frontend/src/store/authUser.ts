@@ -11,6 +11,7 @@ interface ISignUpCredentials {
 interface IStore {
     user: [] | null;
     isSigningUp: boolean;
+    isCheckingAuth: boolean;
     signup: (credentials: ISignUpCredentials) => Promise<void>;
     logout: () => Promise<void>;
     authCheck: () => Promise<void>;
@@ -19,6 +20,7 @@ interface IStore {
 export const useAuthStore = create<IStore>((set) => ({
     user: null,
     isSigningUp: false,
+    isCheckingAuth: true,
     signup: async (credentials) => {
         set({ isSigningUp: true });
         try {
@@ -35,5 +37,14 @@ export const useAuthStore = create<IStore>((set) => ({
     },
     login: async () => {},
     logout: async () => {},
-    authCheck: async () => {},
+    authCheck: async () => {
+        set({ isCheckingAuth: true });
+
+        try {
+            const response = await axios.get("/api/v1/auth/authCheck");
+            set({ user: response.data.user, isCheckingAuth: false });
+        } catch (error) {
+            set({ isCheckingAuth: false, user: null });
+        }
+    },
 }));
