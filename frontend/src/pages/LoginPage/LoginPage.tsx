@@ -38,7 +38,7 @@ const LoginPage: FC = () => {
                     <div className={styles.field}>
                         <label htmlFor="password">Password</label>
                         <input
-                            type="text"
+                            type="password"
                             placeholder="*******"
                             id="password"
                             value={password}

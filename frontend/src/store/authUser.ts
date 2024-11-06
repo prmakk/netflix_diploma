@@ -2,7 +2,7 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import { create } from "zustand";
 
-interface ICredentials {
+interface ISignUpCredentials {
     email: string;
     username: string;
     password: string;
@@ -11,8 +11,7 @@ interface ICredentials {
 interface IStore {
     user: [] | null;
     isSigningUp: boolean;
-    signup: (credentials: ICredentials) => Promise<void>;
-    login: () => Promise<void>;
+    signup: (credentials: ISignUpCredentials) => Promise<void>;
     logout: () => Promise<void>;
     authCheck: () => Promise<void>;
 }
