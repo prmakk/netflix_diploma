@@ -12,6 +12,7 @@ interface IStore {
     user: [] | null;
     isSigningUp: boolean;
     isCheckingAuth: boolean;
+    isLoggingOut: boolean;
     signup: (credentials: ISignUpCredentials) => Promise<void>;
     logout: () => Promise<void>;
     authCheck: () => Promise<void>;
@@ -21,6 +22,7 @@ export const useAuthStore = create<IStore>((set) => ({
     user: null,
     isSigningUp: false,
     isCheckingAuth: true,
+    isLoggingOut: false,
     signup: async (credentials) => {
         set({ isSigningUp: true });
         try {
@@ -36,7 +38,17 @@ export const useAuthStore = create<IStore>((set) => ({
         }
     },
     login: async () => {},
-    logout: async () => {},
+    logout: async () => {
+        set({ isLoggingOut: true });
+        try {
+            await axios.post("/api/v1/auth/logout");
+            set({ user: null, isLoggingOut: false });
+            toast.success("Logged out successfully");
+        } catch (error: any) {
+            set({ isLoggingOut: false });
+            toast.error(error.response.data.message || "Logout failed");
+        }
+    },
     authCheck: async () => {
         set({ isCheckingAuth: true });
 
