@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 
 import HomeScreen from "./HomeScreen";
 import AuthScreen from "./AuthScreen";
