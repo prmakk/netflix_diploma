@@ -38,9 +38,7 @@ const AuthScreen: FC = () => {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
-                    <button type="submit">
-                        <Link to={"/signup"}>Get started</Link>
-                    </button>
+                    <button type="submit">Get started</button>
                 </form>
             </div>
 
