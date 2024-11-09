@@ -25,6 +25,10 @@
             font-size: 14px;
             font-weight: 400;
         }
+
+        @media (max-width: 1200px) {
+            padding: 10px 20px;
+        }
     }
 
     .hero {
