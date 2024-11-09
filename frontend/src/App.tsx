@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { useEffect } from "react";
+import { Loader } from "lucide-react";
 
 import "./styles/normalize.css";
 import "./styles/global.scss";
@@ -11,11 +12,19 @@ import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import { useAuthStore } from "./store/authUser";
 
 function App() {
-    const { authCheck, user } = useAuthStore();
+    const { authCheck, isCheckingAuth, user } = useAuthStore();
 
     useEffect(() => {
         authCheck();
     }, []);
+
+    if (isCheckingAuth) {
+        return (
+            <div className="loader">
+                <Loader color="red" size={30} />
+            </div>
+        );
+    }
 
     return (
         <>

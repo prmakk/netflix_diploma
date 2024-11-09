@@ -3,3 +3,23 @@
 body {
     font-family: "Roboto", sans-serif;
 }
+
+.loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #000;
+    height: 100vh;
+
+    :nth-child(1) {
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        animation: spin 1s linear infinite;
+    }
+}
