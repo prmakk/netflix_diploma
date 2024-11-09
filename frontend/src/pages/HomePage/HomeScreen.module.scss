@@ -1,0 +1,6 @@
+@import "../../styles/mixins.scss";
+
+.home {
+    @include container();
+    color: #fff;
+}

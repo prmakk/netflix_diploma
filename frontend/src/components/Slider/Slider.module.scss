@@ -1,0 +1,113 @@
+@import "../../styles/variables.scss";
+@import "../../styles/mixins.scss";
+
+.sliderMovies {
+    position: relative;
+    border-radius: 20px;
+
+    &__nav {
+        width: 100%;
+        z-index: 2;
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        svg {
+            cursor: pointer;
+            padding: 0px 10px;
+
+            &:hover {
+                scale: 1.1;
+            }
+        }
+    }
+
+    &__movie {
+        background: linear-gradient(
+            to top,
+            rgba(0, 0, 0, 0.8),
+            rgba(0, 0, 0, 0)
+        );
+        position: relative;
+
+        .image {
+            display: inline-block;
+
+            img {
+                position: relative;
+                z-index: -1;
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        .info {
+            position: absolute;
+            bottom: 10%;
+            left: 3%;
+            margin-top: 10px;
+
+            &__title {
+                width: 100%;
+
+                p {
+                    font-size: 70px;
+                    font-weight: 600;
+                }
+            }
+
+            &__subtitle {
+                p {
+                    max-width: 90%;
+                }
+            }
+
+            &__additional {
+                margin-top: 20px;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                font-size: 16px;
+
+                p {
+                    font-size: 30px;
+                    font-weight: 800;
+                }
+
+                a {
+                    color: #000;
+                    display: flex;
+                    align-items: center;
+                    gap: 5px;
+                    font-weight: 800;
+                    background-color: #fff;
+                    padding: 7px 15px;
+                    border-radius: 5px;
+                    text-decoration: none;
+                    transition: 0.2s all ease-in;
+                    text-transform: uppercase;
+                    letter-spacing: 1px;
+
+                    &:hover {
+                        background-color: $redColor;
+                    }
+                }
+
+                .vote {
+                    display: flex;
+                    align-items: center;
+                    gap: 5px;
+
+                    p {
+                        font-weight: 800;
+                    }
+                }
+            }
+        }
+    }
+}

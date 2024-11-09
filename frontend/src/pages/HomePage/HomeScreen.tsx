@@ -1,13 +1,12 @@
 import { FC } from "react";
 
 import styles from "./HomeScreen.module.scss";
-import { useAuthStore } from "../../store/authUser";
+import Slider from "../../components/Slider/Slider";
 
 const HomeScreen: FC = () => {
-    const { logout } = useAuthStore();
     return (
         <div className={styles.home}>
-            HomeScreen <button onClick={logout}>Logout</button>
+            <Slider />
         </div>
     );
 };
