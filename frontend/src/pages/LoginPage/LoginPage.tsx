@@ -1,15 +1,17 @@
 import { FC, useState } from "react";
+import { useAuthStore } from "../../store/authUser";
+import { Link } from "react-router-dom";
 
 import styles from "./LoginPage.module.scss";
-import { Link } from "react-router-dom";
 
 const LoginPage: FC = () => {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+    const { login } = useAuthStore();
 
     const handleSignIn = (e: React.FormEvent) => {
         e.preventDefault();
-        console.log(email, password);
+        login({ email, password });
     };
 
     return (
