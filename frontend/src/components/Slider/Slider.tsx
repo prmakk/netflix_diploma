@@ -2,6 +2,7 @@ import { FC, useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Link } from "react-router-dom";
 import { MoveLeft, MoveRight, Play, Star } from "lucide-react";
+import { Autoplay } from "swiper/modules";
 
 import "swiper/css";
 import styles from "./Slider.module.scss";
@@ -35,6 +36,8 @@ const Slider: FC = () => {
                     loop={true}
                     onSwiper={(s) => setSwiper(s)}
                     slidesPerView={1}
+                    modules={[Autoplay]}
+                    autoplay={{ delay: 3000, disableOnInteraction: false }}
                 >
                     {sliderMovies.map((movie) => (
                         <SwiperSlide key={movie.poster_path}>
