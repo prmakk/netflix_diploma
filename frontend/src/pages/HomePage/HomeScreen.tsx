@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 
 import { Link } from "react-router-dom";
 import { LogOut, Search } from "lucide-react";
@@ -6,9 +6,25 @@ import { LogOut, Search } from "lucide-react";
 import styles from "./HomeScreen.module.scss";
 import Slider from "../../components/Slider/Slider";
 import { useAuthStore } from "../../store/authUser";
+import Movie from "../../components/Movie/Movie";
+import { useMovieStore } from "../../store/movies";
 
 const HomeScreen: FC = () => {
     const { logout } = useAuthStore();
+    const {
+        getBestMovies,
+        getTrendingMovies,
+        getUpcomingMovies,
+        bestMovies,
+        trendingMovies,
+        upcomingMovies,
+    } = useMovieStore();
+
+    useEffect(() => {
+        getTrendingMovies();
+        getBestMovies();
+        getUpcomingMovies();
+    }, []);
 
     return (
         <div className={styles.home}>
@@ -35,7 +51,35 @@ const HomeScreen: FC = () => {
                     </button>
                 </div>
             </header>
+
             <Slider />
+
+            <section className={styles.films}>
+                <h3 className={styles.title}>Trending</h3>
+                <hr />
+                <div className={styles.grid}>
+                    {trendingMovies &&
+                        trendingMovies.map((movie) => <Movie movie={movie} />)}
+                </div>
+            </section>
+
+            <section className={styles.films}>
+                <h3 className={styles.title}>Best of all time</h3>
+                <hr />
+                <div className={styles.grid}>
+                    {bestMovies &&
+                        bestMovies.map((movie) => <Movie movie={movie} />)}
+                </div>
+            </section>
+
+            <section className={styles.films}>
+                <h3 className={styles.title}>Upcoming</h3>
+                <hr />
+                <div className={styles.grid}>
+                    {upcomingMovies &&
+                        upcomingMovies.map((movie) => <Movie movie={movie} />)}
+                </div>
+            </section>
         </div>
     );
 };

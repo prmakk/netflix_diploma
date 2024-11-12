@@ -1,0 +1,55 @@
+.movie {
+    max-width: 300px;
+    transition: 0.1s all ease-in;
+    text-decoration: none;
+    color: #fff;
+
+    &:hover {
+        scale: 1.03;
+    }
+
+    .poster {
+        position: relative;
+
+        img {
+            max-width: 100%;
+        }
+
+        svg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    }
+
+    .info {
+        .title {
+            margin-top: 10px;
+            font-size: clamp(14px, 4vw, 18px);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .additional {
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 18px;
+
+            .rating {
+                display: flex;
+                align-items: flex-end;
+                gap: 5px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .movie {
+        max-width: 200px;
+    }
+}
