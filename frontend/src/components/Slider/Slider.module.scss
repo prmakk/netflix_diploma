@@ -4,7 +4,6 @@
 .sliderMovies {
     @include container();
     position: relative;
-    border-radius: 20px;
 
     &__nav {
         width: 100%;
@@ -20,7 +19,7 @@
 
         svg {
             cursor: pointer;
-            padding: 0px 10px;
+            padding: 0px 20px;
 
             &:hover {
                 scale: 1.1;

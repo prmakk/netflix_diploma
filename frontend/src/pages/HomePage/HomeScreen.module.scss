@@ -1,6 +1,69 @@
 @import "../../styles/mixins.scss";
+@import "../../styles/variables.scss";
 
 .home {
     color: #fff;
-    background-color: #000;
+    background-color: $blackColor;
+
+    .header {
+        @include container();
+        padding: 20px 20px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+
+        a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 20px;
+            transition: 0.2s all ease-in-out;
+
+            &:hover {
+                color: $redColor;
+            }
+        }
+
+        img {
+            max-width: 170px;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-grow: 2;
+            gap: 10px;
+
+            .links {
+                display: flex;
+                gap: 10px;
+            }
+        }
+
+        .items {
+            button {
+                cursor: pointer;
+                background-color: transparent;
+                border: none;
+
+                svg {
+                    transition: 0.2s all ease-out;
+
+                    &:hover {
+                        scale: 1.1;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 666px) {
+    .home .header .nav .links {
+        display: none;
+    }
+
+    .home .header img {
+        max-width: 120px;
+    }
 }
