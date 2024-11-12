@@ -1,26 +1,16 @@
 import { FC, useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import { MoveLeft, MoveRight, Play, Star } from "lucide-react";
 
 import "swiper/css";
 import styles from "./Slider.module.scss";
-
-import IMovie from "../../types/types";
+import { useMovieStore } from "../../store/movies";
 
 const Slider: FC = () => {
     const MOVIE_BACKDROP = "https://image.tmdb.org/t/p/w1280/";
-    const [movies, setMovies] = useState<IMovie[]>([]);
     const [swiper, setSwiper] = useState<any>(null);
-
-    const getSliderMovies = async function () {
-        const response = await axios.get(
-            "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=true&language=en-US&page=1&sort_by=popularity.desc&api_key=d42d7d1e0db582adac2ddb0f20141cfd"
-        );
-        console.log(response.data.results);
-        setMovies(response.data.results);
-    };
+    const { getSliderMovies, sliderMovies } = useMovieStore();
 
     useEffect(() => {
         getSliderMovies();
@@ -40,13 +30,13 @@ const Slider: FC = () => {
                 />
             </div>
 
-            {movies && (
+            {sliderMovies && (
                 <Swiper
                     loop={true}
                     onSwiper={(s) => setSwiper(s)}
                     slidesPerView={1}
                 >
-                    {movies.map((movie) => (
+                    {sliderMovies.map((movie) => (
                         <SwiperSlide key={movie.poster_path}>
                             <div className={styles.sliderMovies__movie}>
                                 <div className={styles.image}>

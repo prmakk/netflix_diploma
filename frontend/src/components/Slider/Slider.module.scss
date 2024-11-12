@@ -2,6 +2,7 @@
 @import "../../styles/mixins.scss";
 
 .sliderMovies {
+    @include container();
     position: relative;
     border-radius: 20px;
 
