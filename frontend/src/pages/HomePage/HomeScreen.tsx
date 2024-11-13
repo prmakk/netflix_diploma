@@ -59,7 +59,9 @@ const HomeScreen: FC = () => {
                 <hr />
                 <div className={styles.grid}>
                     {trendingMovies &&
-                        trendingMovies.map((movie) => <Movie movie={movie} />)}
+                        trendingMovies.map((movie) => (
+                            <Movie key={movie.id} movie={movie} />
+                        ))}
                 </div>
             </section>
 
@@ -68,7 +70,9 @@ const HomeScreen: FC = () => {
                 <hr />
                 <div className={styles.grid}>
                     {bestMovies &&
-                        bestMovies.map((movie) => <Movie movie={movie} />)}
+                        bestMovies.map((movie) => (
+                            <Movie key={movie.id} movie={movie} />
+                        ))}
                 </div>
             </section>
 
@@ -77,7 +81,9 @@ const HomeScreen: FC = () => {
                 <hr />
                 <div className={styles.grid}>
                     {upcomingMovies &&
-                        upcomingMovies.map((movie) => <Movie movie={movie} />)}
+                        upcomingMovies.map((movie) => (
+                            <Movie key={movie.id} movie={movie} />
+                        ))}
                 </div>
             </section>
         </div>
