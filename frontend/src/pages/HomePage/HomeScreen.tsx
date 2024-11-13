@@ -1,7 +1,7 @@
 import { FC, useEffect } from "react";
 
 import { Link } from "react-router-dom";
-import { LogOut, Search } from "lucide-react";
+import { Loader, LogOut, Search } from "lucide-react";
 
 import styles from "./HomeScreen.module.scss";
 import Slider from "../../components/Slider/Slider";
@@ -18,6 +18,7 @@ const HomeScreen: FC = () => {
         bestMovies,
         trendingMovies,
         upcomingMovies,
+        isLoading,
     } = useMovieStore();
 
     useEffect(() => {
@@ -25,6 +26,14 @@ const HomeScreen: FC = () => {
         getBestMovies();
         getUpcomingMovies();
     }, []);
+
+    if (isLoading) {
+        return (
+            <div className="loader">
+                <Loader color="red" size={30} />
+            </div>
+        );
+    }
 
     return (
         <div className={styles.home}>

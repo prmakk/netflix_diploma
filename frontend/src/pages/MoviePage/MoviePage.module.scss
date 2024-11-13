@@ -1,0 +1,94 @@
+@import "../../styles/variables.scss";
+@import "../../styles/mixins.scss";
+
+.movie {
+    height: 100vh;
+    color: #fff;
+    background-color: #000;
+
+    .header {
+        @include container();
+        padding: 20px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+
+        img {
+            max-width: 170px;
+        }
+
+        .items {
+            button {
+                cursor: pointer;
+                background-color: transparent;
+                border: none;
+
+                svg {
+                    transition: 0.2s all ease-out;
+
+                    &:hover {
+                        scale: 1.1;
+                    }
+                }
+            }
+        }
+    }
+
+    .main {
+        @include container();
+        background-color: $blackColor;
+
+        .info {
+            padding: 20px;
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+
+            img {
+                max-width: 300px;
+                width: 100%;
+            }
+
+            .details {
+                width: 100%;
+                background-color: lighten($blackColor, 5%);
+                padding: 20px;
+                border-radius: 20px;
+
+                hr {
+                    background-color: lighten($blackColor, 10%);
+                    height: 2px;
+                    border: none;
+                }
+
+                .title {
+                    font-size: 32px;
+                    font-weight: 700;
+                    display: flex;
+                    justify-content: space-between;
+
+                    .rating {
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                        font-size: 22px;
+                        font-weight: 500;
+
+                        .star {
+                            display: flex;
+                            align-items: center;
+                        }
+                    }
+                }
+
+                .subtitle {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                    font-size: 18px;
+                }
+            }
+        }
+    }
+}

@@ -10,6 +10,7 @@ import HomePage from "./pages/HomePage/HomePage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import { useAuthStore } from "./store/authUser";
+import MoviePage from "./pages/MoviePage/MoviePage";
 
 function App() {
     const { authCheck, isCheckingAuth, user } = useAuthStore();
@@ -38,6 +39,10 @@ function App() {
                     path="/signup"
                     element={!user ? <SignUpPage /> : <Navigate to={"/"} />}
                 />
+                <Route
+                    path="/movie/:id"
+                    element={!user ? <Navigate to={"/"} /> : <MoviePage />}
+                ></Route>
             </Routes>
 
             <Toaster />
