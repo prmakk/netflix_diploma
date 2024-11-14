@@ -2,7 +2,7 @@
 @import "../../styles/mixins.scss";
 
 .movie {
-    height: 100vh;
+    min-height: 100svh;
     color: #fff;
     background-color: #000;
 
@@ -40,17 +40,28 @@
         background-color: $blackColor;
 
         .info {
-            padding: 20px;
+            padding: 20px 0px;
             display: flex;
             align-items: flex-start;
+            justify-content: space-between;
             gap: 20px;
 
-            img {
-                max-width: 300px;
+            .image {
+                flex-shrink: 2;
+                display: flex;
+                justify-content: center;
+                align-items: center;
                 width: 100%;
+
+                img {
+                    max-width: 300px;
+                    width: 100%;
+                    transition: 0.2s all ease-in;
+                }
             }
 
             .details {
+                flex-shrink: 1;
                 width: 100%;
                 background-color: lighten($blackColor, 5%);
                 padding: 20px;
@@ -87,8 +98,43 @@
                     flex-direction: column;
                     gap: 10px;
                     font-size: 18px;
+
+                    .genres {
+                        display: flex;
+                        align-items: center;
+                        flex-wrap: wrap;
+                        gap: 10px;
+                    }
                 }
             }
         }
+
+        .trailer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            aspect-ratio: 16/9;
+        }
+    }
+}
+
+@media screen and (max-width: 950px) {
+    .rating {
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width: 777px) {
+    .info {
+        flex-direction: column;
+        justify-content: center;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .title {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
     }
 }

@@ -1,0 +1,7 @@
+@import "../../styles/variables.scss";
+
+.genre {
+    background-color: lighten($blackColor, 15%);
+    padding: 7px 14px;
+    border-radius: 5px;
+}

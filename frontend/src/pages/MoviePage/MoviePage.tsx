@@ -1,11 +1,13 @@
 import { FC, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Loader, LogOut, Search, Star } from "lucide-react";
+import ReactPlayer from "react-player";
 
 import styles from "./MoviePage.module.scss";
 
 import { useAuthStore } from "../../store/authUser";
 import { useMovieStore } from "../../store/movies";
+import Genre from "../../components/Genre/Genre";
 
 const MoviePage: FC = () => {
     const IMAGE_URL = "https://image.tmdb.org/t/p/w400/";
@@ -24,6 +26,29 @@ const MoviePage: FC = () => {
             </div>
         );
     }
+
+    const renderTrailer = () => {
+        const trailer = oneMovieDetails?.videos.results.find(
+            (item: any) => item.type === "Trailer"
+        );
+
+        if (trailer) {
+            return (
+                <ReactPlayer
+                    url={`https://www.youtube.com/watch?v=${trailer.key}`}
+                    height="100%"
+                    width="100%"
+                    controls
+                />
+            );
+        } else {
+            return (
+                <p style={{ textAlign: "center" }}>
+                    (We apologize, the trailer is not available)
+                </p>
+            );
+        }
+    };
 
     return (
         <div className={styles.movie}>
@@ -46,10 +71,12 @@ const MoviePage: FC = () => {
 
             <div className={styles.main}>
                 <div className={styles.info}>
-                    <img
-                        src={`${IMAGE_URL}${oneMovieDetails?.poster_path}`}
-                        alt=""
-                    />
+                    <div className={styles.image}>
+                        <img
+                            src={`${IMAGE_URL}${oneMovieDetails?.poster_path}`}
+                            alt="poster"
+                        />
+                    </div>
 
                     <div className={styles.details}>
                         <div className={styles.title}>
@@ -81,15 +108,19 @@ const MoviePage: FC = () => {
                                     .map((country) => country.name)
                                     .join(", ")}
                             </p>
-                            {oneMovieDetails?.genres && (
-                                <p>
-                                    Genres:{" "}
-                                    {oneMovieDetails.genres
-                                        //@ts-ignore
-                                        .map((genre) => genre.name)
-                                        .join(", ")}
-                                </p>
-                            )}
+                            <div className={styles.genres}>
+                                Genres:{" "}
+                                {oneMovieDetails
+                                    ? oneMovieDetails.genres.map((genre) => (
+                                          <Genre
+                                              //@ts-ignore
+                                              key={genre.name}
+                                              //@ts-ignore
+                                              genre={genre.name}
+                                          />
+                                      ))
+                                    : "No genres provided"}
+                            </div>
                             <p>
                                 Release date:{" "}
                                 {oneMovieDetails?.release_date
@@ -106,6 +137,8 @@ const MoviePage: FC = () => {
                         </div>
                     </div>
                 </div>
+
+                <div className={styles.trailer}>{renderTrailer()}</div>
             </div>
         </div>
     );

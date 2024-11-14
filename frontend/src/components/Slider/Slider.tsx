@@ -20,12 +20,12 @@ const Slider: FC = () => {
         <div className={styles.sliderMovies}>
             <div className={styles.sliderMovies__nav}>
                 <MoveLeft
-                    size={50}
+                    size={100}
                     color="#fff"
                     onClick={() => swiper.slidePrev()}
                 />
                 <MoveRight
-                    size={50}
+                    size={100}
                     color="#fff"
                     onClick={() => swiper.slideNext()}
                 />
