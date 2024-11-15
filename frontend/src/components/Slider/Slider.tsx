@@ -7,11 +7,13 @@ import { Autoplay } from "swiper/modules";
 import "swiper/css";
 import styles from "./Slider.module.scss";
 import { useMovieStore } from "../../store/movies";
+import Skeleton from "../Skeleton/Skeleton";
 
 const Slider: FC = () => {
     const MOVIE_BACKDROP = "https://image.tmdb.org/t/p/w1280/";
     const [swiper, setSwiper] = useState<any>(null);
     const { getSliderMovies, sliderMovies } = useMovieStore();
+    const [isImageLoading, setIsImageLoading] = useState<boolean>(true);
 
     useEffect(() => {
         getSliderMovies();
@@ -42,12 +44,21 @@ const Slider: FC = () => {
                     {sliderMovies.map((movie) => (
                         <SwiperSlide key={movie.poster_path}>
                             <div className={styles.sliderMovies__movie}>
+                                {isImageLoading && (
+                                    <Skeleton maxWidth="100%" ratio="16/9" />
+                                )}
                                 <div className={styles.image}>
                                     <img
+                                        style={{
+                                            display: isImageLoading
+                                                ? "none"
+                                                : "block",
+                                        }}
                                         src={
                                             MOVIE_BACKDROP + movie.backdrop_path
                                         }
                                         alt="poster"
+                                        onLoad={() => setIsImageLoading(false)}
                                     />
                                 </div>
                                 <div className={styles.info}>
