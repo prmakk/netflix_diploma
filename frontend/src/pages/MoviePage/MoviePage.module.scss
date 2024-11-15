@@ -38,6 +38,7 @@
     .main {
         @include container();
         background-color: $blackColor;
+        padding-bottom: 20px;
 
         .info {
             padding: 20px 0px;
