@@ -1,22 +1,33 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Loader, LogOut, Search, Star } from "lucide-react";
 import ReactPlayer from "react-player";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
 
 import styles from "./MoviePage.module.scss";
 
 import { useAuthStore } from "../../store/authUser";
 import { useMovieStore } from "../../store/movies";
 import Genre from "../../components/Genre/Genre";
+import Movie from "../../components/Movie/Movie";
 
 const MoviePage: FC = () => {
     const IMAGE_URL = "https://image.tmdb.org/t/p/w400/";
+    const [_, setSwiper] = useState<any>(null);
     const { id } = useParams();
     const { logout } = useAuthStore();
-    const { getOneMovie, oneMovieDetails, isLoading } = useMovieStore();
+    const {
+        getOneMovie,
+        oneMovieDetails,
+        recommendedMovies,
+        getRecommendedMovies,
+        isLoading,
+    } = useMovieStore();
 
     useEffect(() => {
         getOneMovie(id!);
+        getRecommendedMovies(id!);
     }, [id]);
 
     if (isLoading) {
@@ -139,6 +150,30 @@ const MoviePage: FC = () => {
                 </div>
 
                 <div className={styles.trailer}>{renderTrailer()}</div>
+
+                <div className={styles.recommended}>
+                    <h3 className={styles.title}>You might like</h3>
+                    <Swiper
+                        loop={true}
+                        onSwiper={(s) => setSwiper(s)}
+                        slidesPerView={6}
+                        spaceBetween={16}
+                        breakpoints={{
+                            300: { slidesPerView: 2, spaceBetween: 12 },
+                            400: { slidesPerView: 3, spaceBetween: 12 },
+                            768: { slidesPerView: 4, spaceBetween: 12 },
+                            1024: { slidesPerView: 6, spaceBetween: 16 },
+                        }}
+                        modules={[Autoplay]}
+                        autoplay={{ delay: 2000, disableOnInteraction: false }}
+                    >
+                        {recommendedMovies?.map((movie) => (
+                            <SwiperSlide key={movie.id}>
+                                <Movie movie={movie} />
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
+                </div>
             </div>
         </div>
     );

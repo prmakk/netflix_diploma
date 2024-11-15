@@ -10,12 +10,14 @@ interface IMovieStore {
     bestMovies: IMovie[] | null;
     trendingMovies: IMovie[] | null;
     upcomingMovies: IMovie[] | null;
+    recommendedMovies: IMovie[] | null;
     oneMovieDetails: IMovieDetails | null;
     getSliderMovies: () => Promise<void>;
     getBestMovies: () => Promise<void>;
     getTrendingMovies: () => Promise<void>;
     getUpcomingMovies: () => Promise<void>;
     getOneMovie: (id: string) => Promise<void>;
+    getRecommendedMovies: (id: string) => Promise<void>;
 }
 
 export const useMovieStore = create<IMovieStore>((set) => ({
@@ -24,6 +26,7 @@ export const useMovieStore = create<IMovieStore>((set) => ({
     bestMovies: null,
     trendingMovies: null,
     upcomingMovies: null,
+    recommendedMovies: null,
     oneMovieDetails: null,
     getSliderMovies: async () => {
         try {
@@ -80,6 +83,16 @@ export const useMovieStore = create<IMovieStore>((set) => ({
             set({ oneMovieDetails: response.data, isLoading: false });
         } catch (error: any) {
             set({ isLoading: false });
+            toast.error("An error occured, try again later");
+        }
+    },
+    getRecommendedMovies: async (id) => {
+        try {
+            const response = await axios.get(
+                `https://api.themoviedb.org/3/movie/${id}/recommendations?language=en-US&page=1&api_key=d42d7d1e0db582adac2ddb0f20141cfd`
+            );
+            set({ recommendedMovies: response.data.results });
+        } catch (error: any) {
             toast.error("An error occured, try again later");
         }
     },

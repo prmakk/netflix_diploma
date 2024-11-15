@@ -116,6 +116,16 @@
             justify-content: center;
             aspect-ratio: 16/9;
         }
+
+        .recommended {
+            padding-top: 20px;
+
+            .title {
+                padding-bottom: 20px;
+                font-size: clamp(24px, 3vw, 32px);
+                font-weight: 700;
+            }
+        }
     }
 }
 
