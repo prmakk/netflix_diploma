@@ -4,6 +4,7 @@ import { Play, Star } from "lucide-react";
 
 import styles from "./Movie.module.scss";
 import IMovie from "../../types/types";
+import Skeleton from "../Skeleton/Skeleton";
 
 interface Props {
     movie: IMovie;
@@ -12,19 +13,21 @@ interface Props {
 const Movie: FC<Props> = ({ movie }) => {
     const IMAGE_URL = "https://image.tmdb.org/t/p/w400/";
     const [isHovered, setIsHovered] = useState<boolean>(false);
+    const [isImageLoading, setIsImageLoading] = useState<boolean>(true);
 
     return (
         <Link to={`/movie/${movie.id}`} className={styles.movie}>
+            {isImageLoading && <Skeleton maxWidth="300" ratio="2/3" />}
             <div
                 className={styles.poster}
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
             >
                 <img
+                    style={{ display: isImageLoading ? "none" : "block" }}
                     src={`${IMAGE_URL}${movie.poster_path}`}
                     alt="poster"
-                    //TODO: skeleton while image is still loading
-                    onLoad={() => console.log("image loaded")}
+                    onLoad={() => setIsImageLoading(false)}
                 />
                 {isHovered && <Play size={50} color="#fff" fill="#fff" />}
             </div>
