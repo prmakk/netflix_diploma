@@ -18,6 +18,7 @@ interface IMovieStore {
     getUpcomingMovies: () => Promise<void>;
     getOneMovie: (id: string) => Promise<void>;
     getRecommendedMovies: (id: string) => Promise<void>;
+    addToFavorite: (userId: string, movieId: string) => Promise<void>;
 }
 
 export const useMovieStore = create<IMovieStore>((set) => ({
@@ -94,6 +95,17 @@ export const useMovieStore = create<IMovieStore>((set) => ({
             set({ recommendedMovies: response.data.results });
         } catch (error: any) {
             toast.error("An error occured, try again later");
+        }
+    },
+    addToFavorite: async (userId, movieId) => {
+        try {
+            const response = await axios.post("/api/v1/auth/addfavorite", {
+                userId: userId,
+                movieId: movieId,
+            });
+            toast.success(response.data.message);
+        } catch (error: any) {
+            toast.error(error.response.data.message);
         }
     },
 }));

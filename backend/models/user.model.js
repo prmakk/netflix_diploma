@@ -19,7 +19,7 @@ const userSchema = new Schema({
         type: String,
         default: "",
     },
-    searchHistory: {
+    favorites: {
         type: Array,
         default: [],
     },

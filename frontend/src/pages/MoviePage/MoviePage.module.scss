@@ -68,6 +68,34 @@
                 padding: 20px;
                 border-radius: 20px;
 
+                .favorite {
+                    width: 100%;
+                    display: flex;
+                    justify-content: right;
+                    margin-top: 5px;
+
+                    button {
+                        background-color: lighten($blackColor, 15%);
+                        border: none;
+                        cursor: pointer;
+                        padding: 10px 15px;
+                        color: #fff;
+                        font-size: 16px;
+                        border-radius: 5px;
+
+                        &:disabled {
+                            cursor: not-allowed;
+                            background-color: $blackColor;
+                        }
+
+                        span {
+                            display: flex;
+                            align-items: center;
+                            gap: 5px;
+                        }
+                    }
+                }
+
                 hr {
                     background-color: lighten($blackColor, 10%);
                     height: 2px;
@@ -133,12 +161,20 @@
     .rating {
         flex-direction: column;
     }
+
+    .favorite {
+        margin-top: 10px !important;
+    }
 }
 
 @media screen and (max-width: 777px) {
     .info {
         flex-direction: column;
         justify-content: center;
+    }
+
+    .favorite {
+        justify-content: center !important;
     }
 }
 
@@ -147,5 +183,6 @@
         flex-direction: column;
         align-items: center;
         gap: 10px;
+        text-align: center;
     }
 }

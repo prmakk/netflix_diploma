@@ -1,6 +1,7 @@
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { create } from "zustand";
+import IUser from "../types/types.ts";
 
 interface ISignUpCredentials {
     email: string;
@@ -14,7 +15,7 @@ interface ILoginCredentials {
 }
 
 interface IStore {
-    user: [] | null;
+    user: IUser | null;
     isSigningUp: boolean;
     isCheckingAuth: boolean;
     isLoggingOut: boolean;
@@ -23,6 +24,7 @@ interface IStore {
     login: (credentials: ILoginCredentials) => Promise<void>;
     logout: () => Promise<void>;
     authCheck: () => Promise<void>;
+    getMe: (id: string) => Promise<void>;
 }
 
 export const useAuthStore = create<IStore>((set) => ({
@@ -78,6 +80,14 @@ export const useAuthStore = create<IStore>((set) => ({
             set({ user: response.data.user, isCheckingAuth: false });
         } catch (error) {
             set({ isCheckingAuth: false, user: null });
+        }
+    },
+    getMe: async (id) => {
+        try {
+            const response = await axios.get(`/api/v1/auth/me/${id}`);
+            set({ user: response.data.user });
+        } catch (error: any) {
+            console.log(error.response.message);
         }
     },
 }));

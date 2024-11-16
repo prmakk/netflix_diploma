@@ -45,7 +45,7 @@ function App() {
                     element={!user ? <Navigate to={"/"} /> : <ProfilePage />}
                 />
                 <Route
-                    path="/movie/:id"
+                    path="/movie/:movieId"
                     element={!user ? <Navigate to={"/"} /> : <MoviePage />}
                 ></Route>
             </Routes>

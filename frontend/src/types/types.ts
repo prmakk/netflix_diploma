@@ -50,3 +50,12 @@ export default interface IMovieDetails {
     vote_count: number;
     videos?: any;
 }
+
+export default interface IUser {
+    _id: string;
+    username: string;
+    email: string;
+    password?: string;
+    image?: string;
+    favorites: String[];
+}

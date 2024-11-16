@@ -1,6 +1,13 @@
 import { FC, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Loader, LogOut, Search, Star } from "lucide-react";
+import {
+    CircleCheck,
+    Loader,
+    LogOut,
+    Search,
+    SquarePlus,
+    Star,
+} from "lucide-react";
 import ReactPlayer from "react-player";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
@@ -14,21 +21,61 @@ import Movie from "../../components/Movie/Movie";
 
 const MoviePage: FC = () => {
     const IMAGE_URL = "https://image.tmdb.org/t/p/w400/";
-    const [_, setSwiper] = useState<any>(null);
-    const { id } = useParams();
-    const { logout } = useAuthStore();
+
+    const { logout, user } = useAuthStore();
     const {
         getOneMovie,
         oneMovieDetails,
         recommendedMovies,
         getRecommendedMovies,
         isLoading,
+        addToFavorite,
     } = useMovieStore();
 
+    const [_, setSwiper] = useState<any>(null);
+    const [isMovieAdded, setIsMovieAdded] = useState<boolean>(false);
+
+    const { movieId } = useParams();
+
     useEffect(() => {
-        getOneMovie(id!);
-        getRecommendedMovies(id!);
-    }, [id]);
+        if (movieId) {
+            getOneMovie(movieId);
+            getRecommendedMovies(movieId);
+        }
+    }, [movieId, getOneMovie, getRecommendedMovies]);
+
+    useEffect(() => {
+        const checkMovie = () => {
+            setIsMovieAdded(user?.favorites.includes(movieId!) ?? false);
+        };
+        checkMovie();
+    }, [user?.favorites, movieId]);
+
+    const handleAddMovie = () => {
+        if (user?._id && movieId) {
+            addToFavorite(user._id, movieId);
+            setIsMovieAdded(true);
+        }
+    };
+
+    const renderTrailer = () => {
+        const trailer = oneMovieDetails?.videos.results.find(
+            (item: any) => item.type === "Trailer"
+        );
+
+        return trailer ? (
+            <ReactPlayer
+                url={`https://www.youtube.com/watch?v=${trailer.key}`}
+                height="100%"
+                width="100%"
+                controls
+            />
+        ) : (
+            <p style={{ textAlign: "center" }}>
+                (We apologize, the trailer is not available)
+            </p>
+        );
+    };
 
     if (isLoading) {
         return (
@@ -37,29 +84,6 @@ const MoviePage: FC = () => {
             </div>
         );
     }
-
-    const renderTrailer = () => {
-        const trailer = oneMovieDetails?.videos.results.find(
-            (item: any) => item.type === "Trailer"
-        );
-
-        if (trailer) {
-            return (
-                <ReactPlayer
-                    url={`https://www.youtube.com/watch?v=${trailer.key}`}
-                    height="100%"
-                    width="100%"
-                    controls
-                />
-            );
-        } else {
-            return (
-                <p style={{ textAlign: "center" }}>
-                    (We apologize, the trailer is not available)
-                </p>
-            );
-        }
-    };
 
     return (
         <div className={styles.movie}>
@@ -103,6 +127,25 @@ const MoviePage: FC = () => {
                                 </div>
                                 <p>({oneMovieDetails?.vote_count} rated)</p>
                             </div>
+                        </div>
+
+                        <div className={styles.favorite}>
+                            <button
+                                onClick={handleAddMovie}
+                                disabled={isMovieAdded}
+                            >
+                                {isMovieAdded ? (
+                                    <span>
+                                        Added to favorite
+                                        <CircleCheck />
+                                    </span>
+                                ) : (
+                                    <span>
+                                        Add to favorite
+                                        <SquarePlus />
+                                    </span>
+                                )}
+                            </button>
                         </div>
 
                         <hr />

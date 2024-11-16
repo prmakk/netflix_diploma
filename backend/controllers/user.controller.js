@@ -142,3 +142,45 @@ export async function authCheck(req, res) {
         });
     }
 }
+
+export async function addFavorite(req, res) {
+    try {
+        const { userId, movieId } = req.body;
+
+        await User.findOne({ _id: userId }).then((user) => {
+            if (user && !user.favorites.includes(movieId)) {
+                user.favorites.push(movieId);
+                user.save();
+                return res.status(200).json({
+                    success: true,
+                    message: "Content successfully added",
+                });
+            } else {
+                return res.status(400).json({
+                    success: false,
+                    message: "Content already added",
+                });
+            }
+        });
+    } catch (error) {
+        console.log("Error in addFavorite controller", error.message);
+        res.status(500).json({
+            success: false,
+            message: "Internal server error",
+        });
+    }
+}
+
+export async function getMe(req, res) {
+    try {
+        const userId = req.params.id;
+        const user = await User.findById(userId);
+
+        res.status(200).json({
+            success: true,
+            user: { ...user._doc, password: "" },
+        });
+    } catch (error) {
+        res.status(404).json({ success: false, message: "User not found" });
+    }
+}
