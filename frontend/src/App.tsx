@@ -11,6 +11,7 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import { useAuthStore } from "./store/authUser";
 import MoviePage from "./pages/MoviePage/MoviePage";
+import ProfilePage from "./pages/ProfilePage/ProfilePage";
 
 function App() {
     const { authCheck, isCheckingAuth, user } = useAuthStore();
@@ -38,6 +39,10 @@ function App() {
                 <Route
                     path="/signup"
                     element={!user ? <SignUpPage /> : <Navigate to={"/"} />}
+                />
+                <Route
+                    path="/profile"
+                    element={!user ? <Navigate to={"/"} /> : <ProfilePage />}
                 />
                 <Route
                     path="/movie/:id"

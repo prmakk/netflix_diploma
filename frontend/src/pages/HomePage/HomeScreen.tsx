@@ -1,7 +1,14 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 
 import { Link } from "react-router-dom";
-import { Loader, LogOut, Search } from "lucide-react";
+import {
+    Ellipsis,
+    EllipsisVertical,
+    Loader,
+    LogOut,
+    Search,
+    User,
+} from "lucide-react";
 
 import styles from "./HomeScreen.module.scss";
 import Slider from "../../components/Slider/Slider";
@@ -26,6 +33,12 @@ const HomeScreen: FC = () => {
         getBestMovies();
         getUpcomingMovies();
     }, []);
+
+    const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
+
+    const handleProfile = () => {
+        setIsDropdownOpen(!isDropdownOpen);
+    };
 
     if (isLoading) {
         return (
@@ -55,10 +68,33 @@ const HomeScreen: FC = () => {
                         </Link>
                     </button>
 
-                    <button onClick={logout}>
-                        <LogOut color="#fff" size={30} />
+                    <button onClick={handleProfile}>
+                        {isDropdownOpen ? (
+                            <EllipsisVertical color="#fff" size={30} />
+                        ) : (
+                            <Ellipsis color="#fff" size={30} />
+                        )}
                     </button>
                 </div>
+
+                {isDropdownOpen && (
+                    <div className={styles.dropdown}>
+                        <div className={styles.item}>
+                            <Link to={"/profile"}>
+                                <button>
+                                    Profile
+                                    <User color="#fff" size={20} />
+                                </button>
+                            </Link>
+                        </div>
+
+                        <div className={styles.item}>
+                            <button onClick={logout}>
+                                Logout <LogOut color="#fff" size={20} />
+                            </button>
+                        </div>
+                    </div>
+                )}
             </header>
 
             <Slider />
