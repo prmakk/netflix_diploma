@@ -1,0 +1,33 @@
+@import "../../styles/variables.scss";
+
+.dropdown {
+    position: absolute;
+    right: 20px;
+    top: 70px;
+    background-color: lighten($blackColor, 10%);
+    z-index: 2;
+
+    .item {
+        a {
+            text-decoration: none;
+        }
+
+        .button {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #fff;
+            padding: 15px;
+            width: 100%;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+
+            &:hover {
+                background-color: lighten($blackColor, 15%);
+            }
+        }
+    }
+}

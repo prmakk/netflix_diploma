@@ -18,6 +18,7 @@ import { useAuthStore } from "../../store/authUser";
 import { useMovieStore } from "../../store/movies";
 import Genre from "../../components/Genre/Genre";
 import Movie from "../../components/Movie/Movie";
+import DropdownMenu from "../../components/DropdownMenu/DropdownMenu";
 
 const MoviePage: FC = () => {
     const IMAGE_URL = "https://image.tmdb.org/t/p/w400/";
@@ -91,6 +92,7 @@ const MoviePage: FC = () => {
                 <Link to={"/"}>
                     <img src="/netflix-logo.webp" alt="logo" />
                 </Link>
+
                 <div className={styles.items}>
                     <button>
                         <Link to={"/search"}>
@@ -98,9 +100,7 @@ const MoviePage: FC = () => {
                         </Link>
                     </button>
 
-                    <button onClick={logout}>
-                        <LogOut color="#fff" size={30} />
-                    </button>
+                    <DropdownMenu />
                 </div>
             </header>
 
