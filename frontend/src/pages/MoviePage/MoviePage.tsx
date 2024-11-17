@@ -1,13 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import {
-    CircleCheck,
-    Loader,
-    LogOut,
-    Search,
-    SquarePlus,
-    Star,
-} from "lucide-react";
+import { CircleCheck, Loader, Search, SquarePlus, Star } from "lucide-react";
 import ReactPlayer from "react-player";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
@@ -23,7 +16,7 @@ import DropdownMenu from "../../components/DropdownMenu/DropdownMenu";
 const MoviePage: FC = () => {
     const IMAGE_URL = "https://image.tmdb.org/t/p/w400/";
 
-    const { logout, user } = useAuthStore();
+    const { user } = useAuthStore();
     const {
         getOneMovie,
         oneMovieDetails,
