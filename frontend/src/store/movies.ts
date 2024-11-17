@@ -16,7 +16,7 @@ interface IMovieStore {
     getBestMovies: () => Promise<void>;
     getTrendingMovies: () => Promise<void>;
     getUpcomingMovies: () => Promise<void>;
-    getOneMovie: (id: string) => Promise<void>;
+    getOneMovie: (id: string) => Promise<IMovie>;
     getRecommendedMovies: (id: string) => Promise<void>;
     addToFavorite: (userId: string, movieId: string) => Promise<void>;
 }
@@ -82,6 +82,7 @@ export const useMovieStore = create<IMovieStore>((set) => ({
                 `https://api.themoviedb.org/3/movie/${id}?api_key=d42d7d1e0db582adac2ddb0f20141cfd&append_to_response=videos`
             );
             set({ oneMovieDetails: response.data, isLoading: false });
+            return response.data;
         } catch (error: any) {
             set({ isLoading: false });
             toast.error("An error occured, try again later");

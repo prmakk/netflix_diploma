@@ -57,5 +57,5 @@ export default interface IUser {
     email: string;
     password?: string;
     image?: string;
-    favorites: String[];
+    favorites: string[];
 }
