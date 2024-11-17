@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { CircleCheck, Loader, Search, SquarePlus, Star } from "lucide-react";
+import { useParams } from "react-router-dom";
+import { CircleCheck, Loader, SquarePlus, Star } from "lucide-react";
 import ReactPlayer from "react-player";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
@@ -11,7 +11,7 @@ import { useAuthStore } from "../../store/authUser";
 import { useMovieStore } from "../../store/movies";
 import Genre from "../../components/Genre/Genre";
 import Movie from "../../components/Movie/Movie";
-import DropdownMenu from "../../components/DropdownMenu/DropdownMenu";
+import SecondaryHeader from "../../components/SecondaryHeader/SecondaryHeader";
 
 const MoviePage: FC = () => {
     const IMAGE_URL = "https://image.tmdb.org/t/p/w400/";
@@ -81,21 +81,7 @@ const MoviePage: FC = () => {
 
     return (
         <div className={styles.movie}>
-            <header className={styles.header}>
-                <Link to={"/"}>
-                    <img src="/netflix-logo.webp" alt="logo" />
-                </Link>
-
-                <div className={styles.items}>
-                    <button>
-                        <Link to={"/search"}>
-                            <Search color="#fff" size={30} />
-                        </Link>
-                    </button>
-
-                    <DropdownMenu />
-                </div>
-            </header>
+            <SecondaryHeader />
 
             <div className={styles.main}>
                 <div className={styles.info}>

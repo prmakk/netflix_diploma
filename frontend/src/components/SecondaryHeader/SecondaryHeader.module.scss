@@ -1,0 +1,32 @@
+@import "../../styles/variables.scss";
+@import "../../styles/mixins.scss";
+
+.header {
+    @include container();
+    position: relative;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+
+    img {
+        max-width: 170px;
+    }
+
+    .items {
+        button {
+            cursor: pointer;
+            background-color: transparent;
+            border: none;
+
+            svg {
+                transition: 0.2s all ease-out;
+
+                &:hover {
+                    scale: 1.1;
+                }
+            }
+        }
+    }
+}
