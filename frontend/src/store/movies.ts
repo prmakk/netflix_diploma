@@ -13,9 +13,9 @@ interface IMovieStore {
     recommendedMovies: IMovie[] | null;
     oneMovieDetails: IMovieDetails | null;
     getSliderMovies: () => Promise<void>;
-    getBestMovies: () => Promise<void>;
-    getTrendingMovies: () => Promise<void>;
-    getUpcomingMovies: () => Promise<void>;
+    getBestMovies: (page: number) => Promise<void>;
+    getTrendingMovies: (page: number) => Promise<void>;
+    getUpcomingMovies: (page: number) => Promise<void>;
     getOneMovie: (id: string) => Promise<IMovie>;
     getRecommendedMovies: (id: string) => Promise<void>;
     addToFavorite: (userId: string, movieId: string) => Promise<void>;
@@ -39,11 +39,11 @@ export const useMovieStore = create<IMovieStore>((set) => ({
             toast.error("An error occured, try again later");
         }
     },
-    getBestMovies: async () => {
+    getBestMovies: async (page) => {
         set({ isLoading: true });
         try {
             const response = await axios.get(
-                "https://api.themoviedb.org/3/movie/top_rated?include_adult=false&include_video=true&language=en-US&page=1&sort_by=popularity.desc&api_key=d42d7d1e0db582adac2ddb0f20141cfd"
+                `https://api.themoviedb.org/3/movie/top_rated?include_adult=false&include_video=true&language=en-US&page=${page}&sort_by=popularity.desc&api_key=d42d7d1e0db582adac2ddb0f20141cfd`
             );
             set({ bestMovies: response.data.results, isLoading: false });
         } catch (error: any) {
@@ -51,11 +51,11 @@ export const useMovieStore = create<IMovieStore>((set) => ({
             toast.error("An error occured, try again later");
         }
     },
-    getTrendingMovies: async () => {
+    getTrendingMovies: async (page) => {
         set({ isLoading: true });
         try {
             const response = await axios.get(
-                "https://api.themoviedb.org/3/movie/now_playing?include_adult=false&include_video=true&language=en-US&page=1&sort_by=popularity.desc&api_key=d42d7d1e0db582adac2ddb0f20141cfd"
+                `https://api.themoviedb.org/3/movie/now_playing?include_adult=false&include_video=true&language=en-US&page=${page}&sort_by=popularity.desc&api_key=d42d7d1e0db582adac2ddb0f20141cfd`
             );
             set({ trendingMovies: response.data.results, isLoading: false });
         } catch (error: any) {
@@ -63,11 +63,11 @@ export const useMovieStore = create<IMovieStore>((set) => ({
             toast.error("An error occured, try again later");
         }
     },
-    getUpcomingMovies: async () => {
+    getUpcomingMovies: async (page) => {
         set({ isLoading: true });
         try {
             const response = await axios.get(
-                "https://api.themoviedb.org/3/movie/upcoming?include_adult=false&include_video=true&language=en-US&page=1&sort_by=popularity.desc&api_key=d42d7d1e0db582adac2ddb0f20141cfd"
+                `https://api.themoviedb.org/3/movie/upcoming?include_adult=false&include_video=true&language=en-US&page=${page}&sort_by=popularity.desc&api_key=d42d7d1e0db582adac2ddb0f20141cfd`
             );
             set({ upcomingMovies: response.data.results, isLoading: false });
         } catch (error: any) {

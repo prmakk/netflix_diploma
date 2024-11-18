@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 
 import { Link } from "react-router-dom";
 import { Loader, Search } from "lucide-react";
@@ -8,8 +8,12 @@ import Slider from "../../components/Slider/Slider";
 import Movie from "../../components/Movie/Movie";
 import { useMovieStore } from "../../store/movies";
 import DropdownMenu from "../../components/DropdownMenu/DropdownMenu";
+import Pagination from "../../components/Pagination/Pagination";
 
 const HomeScreen: FC = () => {
+    const [trendingPage, setTrendingPage] = useState<number>(1);
+    const [bestPage, setBestPage] = useState<number>(1);
+    const [upcomingPage, setUpcomingPage] = useState<number>(1);
     const {
         getBestMovies,
         getTrendingMovies,
@@ -21,10 +25,16 @@ const HomeScreen: FC = () => {
     } = useMovieStore();
 
     useEffect(() => {
-        getTrendingMovies();
-        getBestMovies();
-        getUpcomingMovies();
-    }, []);
+        getTrendingMovies(trendingPage);
+    }, [trendingPage]);
+
+    useEffect(() => {
+        getBestMovies(bestPage);
+    }, [bestPage]);
+
+    useEffect(() => {
+        getUpcomingMovies(upcomingPage);
+    }, [upcomingPage]);
 
     if (isLoading) {
         return (
@@ -62,7 +72,7 @@ const HomeScreen: FC = () => {
 
             <Slider />
 
-            <section className={styles.films}>
+            <section className={styles.films} id="trending">
                 <h3 className={styles.title}>Trending</h3>
                 <hr />
                 <div className={styles.grid}>
@@ -71,9 +81,14 @@ const HomeScreen: FC = () => {
                             <Movie key={movie.id} movie={movie} />
                         ))}
                 </div>
+                <Pagination
+                    onPageChange={setTrendingPage}
+                    currentPage={trendingPage}
+                    scrollTo={"trending"}
+                />
             </section>
 
-            <section className={styles.films}>
+            <section className={styles.films} id="best">
                 <h3 className={styles.title}>Best of all time</h3>
                 <hr />
                 <div className={styles.grid}>
@@ -82,9 +97,14 @@ const HomeScreen: FC = () => {
                             <Movie key={movie.id} movie={movie} />
                         ))}
                 </div>
+                <Pagination
+                    onPageChange={setBestPage}
+                    currentPage={bestPage}
+                    scrollTo={"best"}
+                />
             </section>
 
-            <section className={styles.films}>
+            <section className={styles.films} id="upcoming">
                 <h3 className={styles.title}>Upcoming</h3>
                 <hr />
                 <div className={styles.grid}>
@@ -93,6 +113,11 @@ const HomeScreen: FC = () => {
                             <Movie key={movie.id} movie={movie} />
                         ))}
                 </div>
+                <Pagination
+                    onPageChange={setUpcomingPage}
+                    currentPage={upcomingPage}
+                    scrollTo={"upcoming"}
+                />
             </section>
         </div>
     );

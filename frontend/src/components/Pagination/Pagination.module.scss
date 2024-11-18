@@ -1,0 +1,31 @@
+@import "../../styles/variables.scss";
+@import "../../styles/mixins.scss";
+
+.pagination {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+
+    button {
+        color: #fff;
+        border: none;
+        background-color: lighten($blackColor, 10%);
+        cursor: pointer;
+        width: 40px;
+        height: 40px;
+        font-weight: 600;
+        font-size: 16px;
+        transition: 0.2s all ease-in;
+
+        &:hover {
+            background-color: lighten($blackColor, 15%);
+            font-size: 20px;
+            border-radius: 10px;
+        }
+
+        &.active {
+            background-color: $redColor;
+        }
+    }
+}
