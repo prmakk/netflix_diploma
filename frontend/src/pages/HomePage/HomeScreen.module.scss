@@ -4,6 +4,7 @@
 .home {
     color: #fff;
     background-color: $blackColor;
+    position: relative;
 
     .header {
         @include container();
@@ -17,7 +18,7 @@
             color: #fff;
             text-decoration: none;
             font-size: 20px;
-            transition: 0.2s all ease-in-out;
+            transition: 0.1s all ease-in-out;
 
             &:hover {
                 color: $redColor;
@@ -38,6 +39,7 @@
             .links {
                 display: flex;
                 gap: 10px;
+                cursor: pointer;
             }
         }
 
@@ -86,6 +88,37 @@
             // > *:hover {
             //     filter: none;
             // }
+        }
+    }
+
+    .scroll_top {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        right: 50px;
+        bottom: 50px;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: $redColor;
+        animation: scale infinite 2s;
+
+        &:hover {
+            cursor: pointer;
+            background-color: darken($redColor, 5%);
+        }
+
+        @keyframes scale {
+            0% {
+                scale: 1;
+            }
+            50% {
+                scale: 1.1;
+            }
+            100% {
+                scale: 1;
+            }
         }
     }
 }

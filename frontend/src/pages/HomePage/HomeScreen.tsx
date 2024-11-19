@@ -1,7 +1,8 @@
 import { FC, useEffect, useState } from "react";
 
 import { Link } from "react-router-dom";
-import { Loader, Search } from "lucide-react";
+import { Link as AnchorLink } from "react-scroll";
+import { ArrowUp, Loader, Search } from "lucide-react";
 
 import styles from "./HomeScreen.module.scss";
 import Slider from "../../components/Slider/Slider";
@@ -45,7 +46,7 @@ const HomeScreen: FC = () => {
     }
 
     return (
-        <div className={styles.home}>
+        <div className={styles.home} id="home">
             <header className={styles.header}>
                 <Link to={"/"}>
                     <img src="netflix-logo.webp" alt="logo" />
@@ -53,9 +54,15 @@ const HomeScreen: FC = () => {
 
                 <nav className={styles.nav}>
                     <div className={styles.links}>
-                        <Link to={"/"}>Best of all time</Link>
-                        <Link to={"/"}>Trending</Link>
-                        <Link to={"/"}>Upcoming</Link>
+                        <AnchorLink to="trending" smooth>
+                            Trending
+                        </AnchorLink>
+                        <AnchorLink to="best" smooth>
+                            Best of all time
+                        </AnchorLink>
+                        <AnchorLink to="upcoming" smooth>
+                            Upcoming
+                        </AnchorLink>
                     </div>
                 </nav>
 
@@ -119,6 +126,12 @@ const HomeScreen: FC = () => {
                     scrollTo={"upcoming"}
                 />
             </section>
+
+            <AnchorLink to="home" smooth>
+                <div className={styles.scroll_top}>
+                    <ArrowUp size={25} />
+                </div>
+            </AnchorLink>
         </div>
     );
 };
