@@ -187,6 +187,50 @@ export async function addFavorite(req, res) {
     }
 }
 
+export async function removeFavorite(req, res) {
+    try {
+        const { userId, movieId } = req.body;
+
+        if (!userId || !movieId) {
+            return res.status(400).json({
+                success: false,
+                message: "User ID and Movie ID are required",
+            });
+        }
+
+        const user = await User.findOne({ _id: userId });
+
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found",
+            });
+        }
+
+        if (!user.favorites.includes(movieId)) {
+            return res.status(400).json({
+                success: false,
+                message: "Content not found in favorites",
+            });
+        }
+
+        user.favorites = user.favorites.filter((id) => id !== movieId);
+
+        await user.save();
+
+        return res.status(200).json({
+            success: true,
+            message: "Content successfully removed from favorites",
+        });
+    } catch (error) {
+        console.log("Error in removeFavorite controller", error.message);
+        res.status(500).json({
+            success: false,
+            message: "Internal server error",
+        });
+    }
+}
+
 export async function getMe(req, res) {
     try {
         const userId = req.params.id;
