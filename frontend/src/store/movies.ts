@@ -11,6 +11,7 @@ interface IMovieStore {
     trendingMovies: IMovie[] | null;
     upcomingMovies: IMovie[] | null;
     recommendedMovies: IMovie[] | null;
+    searchedMovies: IMovie[] | null;
     oneMovieDetails: IMovieDetails | null;
     getSliderMovies: () => Promise<void>;
     getBestMovies: (page: number) => Promise<void>;
@@ -18,6 +19,8 @@ interface IMovieStore {
     getUpcomingMovies: (page: number) => Promise<void>;
     getOneMovie: (id: string) => Promise<IMovie>;
     getRecommendedMovies: (id: string) => Promise<void>;
+    getSearchedMovies: (id: string) => Promise<void>;
+    clearSearchedMovies: () => void;
     addToFavorite: (userId: string, movieId: string) => Promise<void>;
 }
 
@@ -28,6 +31,7 @@ export const useMovieStore = create<IMovieStore>((set) => ({
     trendingMovies: null,
     upcomingMovies: null,
     recommendedMovies: null,
+    searchedMovies: null,
     oneMovieDetails: null,
     getSliderMovies: async () => {
         try {
@@ -97,6 +101,24 @@ export const useMovieStore = create<IMovieStore>((set) => ({
         } catch (error: any) {
             toast.error("An error occured, try again later");
         }
+    },
+    getSearchedMovies: async (movie) => {
+        try {
+            const response = await axios.get(
+                `https://api.themoviedb.org/3/search/movie?api_key=d42d7d1e0db582adac2ddb0f20141cfd&query=${movie}&include_adult=false&language=en-US`
+            );
+            set({ searchedMovies: response.data.results });
+            if (response.data.results.length > 0) {
+                toast.success("Succesfully found");
+            } else {
+                toast.error("Nothing found");
+            }
+        } catch (error: any) {
+            toast.error(error.response.data.message);
+        }
+    },
+    clearSearchedMovies: () => {
+        set({ searchedMovies: [] });
     },
     addToFavorite: async (userId, movieId) => {
         try {
