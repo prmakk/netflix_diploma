@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { CircleCheck, Loader, SquarePlus, Star } from "lucide-react";
+import { Loader, SquarePlus, Star, Trash } from "lucide-react";
 import ReactPlayer from "react-player";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
@@ -24,6 +24,7 @@ const MoviePage: FC = () => {
         getRecommendedMovies,
         isLoading,
         addToFavorite,
+        removeFromFavorite,
     } = useMovieStore();
 
     const [_, setSwiper] = useState<any>(null);
@@ -49,6 +50,13 @@ const MoviePage: FC = () => {
         if (user?._id && movieId) {
             addToFavorite(user._id, movieId);
             setIsMovieAdded(true);
+        }
+    };
+
+    const handleRemoveMovie = () => {
+        if (user?._id && movieId) {
+            removeFromFavorite(user._id, movieId);
+            setIsMovieAdded(false);
         }
     };
 
@@ -109,22 +117,23 @@ const MoviePage: FC = () => {
                         </div>
 
                         <div className={styles.favorite}>
-                            <button
-                                onClick={handleAddMovie}
-                                disabled={isMovieAdded}
-                            >
-                                {isMovieAdded ? (
+                            {isMovieAdded ? (
+                                <button
+                                    onClick={handleRemoveMovie}
+                                    className={styles.removeBtn}
+                                >
                                     <span>
-                                        Added to favorite
-                                        <CircleCheck />
+                                        Remove from favorite
+                                        <Trash size={20} />
                                     </span>
-                                ) : (
+                                </button>
+                            ) : (
+                                <button onClick={handleAddMovie}>
                                     <span>
-                                        Add to favorite
-                                        <SquarePlus />
+                                        Add to favorite <SquarePlus size={20} />
                                     </span>
-                                )}
-                            </button>
+                                </button>
+                            )}
                         </div>
 
                         <hr />

@@ -22,6 +22,7 @@ interface IMovieStore {
     getSearchedMovies: (id: string) => Promise<void>;
     clearSearchedMovies: () => void;
     addToFavorite: (userId: string, movieId: string) => Promise<void>;
+    removeFromFavorite: (userId: string, movieId: string) => Promise<void>;
 }
 
 export const useMovieStore = create<IMovieStore>((set) => ({
@@ -123,6 +124,17 @@ export const useMovieStore = create<IMovieStore>((set) => ({
     addToFavorite: async (userId, movieId) => {
         try {
             const response = await axios.post("/api/v1/auth/addfavorite", {
+                userId: userId,
+                movieId: movieId,
+            });
+            toast.success(response.data.message);
+        } catch (error: any) {
+            toast.error(error.response.data.message);
+        }
+    },
+    removeFromFavorite: async (userId, movieId) => {
+        try {
+            const response = await axios.post("/api/v1/auth/removefavorite", {
                 userId: userId,
                 movieId: movieId,
             });

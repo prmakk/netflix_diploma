@@ -45,6 +45,10 @@
                     justify-content: right;
                     margin-top: 5px;
 
+                    .removeBtn {
+                        background-color: darken($redColor, 20%);
+                    }
+
                     button {
                         background-color: lighten($blackColor, 15%);
                         border: none;
@@ -53,11 +57,6 @@
                         color: #fff;
                         font-size: 16px;
                         border-radius: 5px;
-
-                        &:disabled {
-                            cursor: not-allowed;
-                            background-color: $blackColor;
-                        }
 
                         span {
                             display: flex;

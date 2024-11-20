@@ -220,7 +220,7 @@ export async function removeFavorite(req, res) {
 
         return res.status(200).json({
             success: true,
-            message: "Content successfully removed from favorites",
+            message: "Content successfully removed",
         });
     } catch (error) {
         console.log("Error in removeFavorite controller", error.message);

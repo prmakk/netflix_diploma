@@ -53,6 +53,9 @@ const ProfilePage: FC = () => {
                             <Movie key={movie.id} movie={movie} />
                         ))}
                     </div>
+                    {favoriteMovies.length < 1 && (
+                        <p style={{ textAlign: "center" }}>No movies</p>
+                    )}
                 </div>
             </div>
         </div>
