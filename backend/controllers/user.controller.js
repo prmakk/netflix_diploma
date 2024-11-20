@@ -147,20 +147,36 @@ export async function addFavorite(req, res) {
     try {
         const { userId, movieId } = req.body;
 
-        await User.findOne({ _id: userId }).then((user) => {
-            if (user && !user.favorites.includes(movieId)) {
-                user.favorites.push(movieId);
-                user.save();
-                return res.status(200).json({
-                    success: true,
-                    message: "Content successfully added",
-                });
-            } else {
-                return res.status(400).json({
-                    success: false,
-                    message: "Content already added",
-                });
-            }
+        if (!userId || !movieId) {
+            return res.status(400).json({
+                success: false,
+                message: "User ID and Movie ID are required",
+            });
+        }
+
+        const user = await User.findOne({ _id: userId });
+
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found",
+            });
+        }
+
+        if (user.favorites.includes(movieId)) {
+            return res.status(400).json({
+                success: false,
+                message: "Content already added",
+            });
+        }
+
+        user.favorites.push(movieId);
+
+        await user.save();
+
+        return res.status(200).json({
+            success: true,
+            message: "Content successfully added",
         });
     } catch (error) {
         console.log("Error in addFavorite controller", error.message);
