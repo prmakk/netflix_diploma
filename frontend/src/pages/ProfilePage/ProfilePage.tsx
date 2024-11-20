@@ -27,9 +27,12 @@ const ProfilePage: FC = () => {
     };
 
     useEffect(() => {
-        getMe(user?._id!);
         fetchMovies(user?.favorites!);
-    }, [user?._id, user?.favorites]);
+    }, [user?.favorites]);
+
+    useEffect(() => {
+        getMe(user?._id!);
+    }, [user?._id!]);
 
     return (
         <div className={styles.profile}>
